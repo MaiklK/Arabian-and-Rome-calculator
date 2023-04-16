@@ -3,9 +3,9 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        System.out.print("Введите математическое выражение для вычисления из 2 чисел, от 0 до 10 каждое.\n" +
+        System.out.print("Введите математическое выражение для вычисления из 2 чисел, от 1 до 10 каждое.\n" +
                 "Можно использовать римские цифры: ");
-        Calc calc = new Calc();
+        Calculator calc = new Calculator();
         calc.enterTerm();
         calc.calculation();
         if (calc.roman){
@@ -17,7 +17,7 @@ public class Main {
     }
 }
 
-class Calc{
+class Calculator{
     boolean roman = false;
     int num1;
     int num2;
@@ -87,7 +87,6 @@ class Calc{
     void calculation() throws Exception {
         switch (operator){
             case '+' :
-                System.out.println(num1 + " + " + num2);
                 result = num2 + num2;
                 break;
             case '-' :
@@ -104,5 +103,4 @@ class Calc{
                 break;
         }
     }
-
 }
