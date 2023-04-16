@@ -2,18 +2,34 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         System.out.print("Введите математическое выражение для вычисления из 2 чисел, от 1 до 10 каждое.\n" +
                 "Можно использовать римские цифры: ");
+        Scanner in = new Scanner(System.in);
+        String input = in.nextLine();
+        in.close();
+        System.out.println(calc(input));
+    }
+
+    public static String calc(String input) {
         Calculator calc = new Calculator();
-        calc.enterTerm();
-        calc.calculation();
+        try {
+            calc.parseInput(input);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            calc.calculation();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         if (calc.roman){
             String resultRoman = calc.romanNumbers[calc.result];
-            System.out.println("Результат: " + resultRoman);
+            return resultRoman;
         } else {
-            System.out.println("Результат: " + calc.result);
+            return Integer.toString(calc.result);
         }
+
     }
 }
 
@@ -32,10 +48,7 @@ class Calculator{
             "LXXV", "LXXVI", "LXXVII", "LXXVIII", "LXXIX", "LXXX", "LXXXI", "LXXXII", "LXXXIII", "LXXXIV", "LXXXV",
             "LXXXVI", "LXXXVII", "LXXXVIII", "LXXXIX", "XC", "XCI", "XCII", "XCIII", "XCIV", "XCV", "XCVI", "XCVII",
             "XCVIII", "XCIX", "C"};
-    void enterTerm() throws Exception {
-        Scanner in = new Scanner(System.in);
-        String tern = in.nextLine();
-        in.close();
+    void parseInput(String tern) throws Exception {
         tern = deleteWhiteSpases(tern);
         String[] decTern = decompositionTern(tern);
         if (!checkAmountNumArray(decTern,2)) throw new Exception("Недопустимое выражение");
@@ -77,10 +90,10 @@ class Calculator{
             throw new Exception("Не допустимые числа");
         }
     }
-    void getOperator(String term){
-        for (int i=0; i<term.length(); i++) {
-            if ("+-*/".contains(Character.toString(term.charAt(i)))) {
-                operator = term.charAt(i);
+    void getOperator(String input){
+        for (int i=0; i<input.length(); i++) {
+            if ("+-*/".contains(Character.toString(input.charAt(i)))) {
+                operator = input.charAt(i);
             }
         }
     }
